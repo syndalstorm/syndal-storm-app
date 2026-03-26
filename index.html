@@ -4,10 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>Syndal Storm</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<!-- System font: Helvetica / Helvetica Neue -->
+<!-- Firebase SDK — loaded with fallback -->
+<script>
+(function() {
+  function loadScript(src, cb) {
+    var s = document.createElement('script');
+    s.src = src;
+    s.onload = cb;
+    s.onerror = function() { window._fbLoadFailed = true; if(cb) cb(); };
+    document.head.appendChild(s);
+  }
+  window._fbReady = false;
+  loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js', function() {
+    loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js', function() {
+      window._fbReady = true;
+    });
+  });
+})();
+</script>
 <style>
 /* =====================================================
    SYNDAL STORM — OnBall-inspired design system
@@ -28,7 +43,7 @@
   --navh:64px;--toph:56px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background:var(--off);}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;background:var(--off);}
 
 /* ── LOADER — gradient splash ── */
 #loader{
@@ -41,11 +56,11 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 #loader.out{opacity:0;pointer-events:none;}
 .ll-wrap{position:relative;z-index:1;text-align:center;display:flex;flex-direction:column;align-items:center;}
 .ll-ring{display:none;}
-.ll-img{width:88px;height:88px;object-fit:contain;border-radius:0;background:transparent;padding:0;animation:lp 2.5s ease-in-out infinite;margin-bottom:20px;border:none;filter:brightness(0) invert(1);}
+.ll-img{width:100px;height:100px;object-fit:cover;border-radius:50%;background:var(--navy);padding:0;animation:lp 2.5s ease-in-out infinite;margin-bottom:20px;border:none;mix-blend-mode:screen;}
 @keyframes lp{0%,100%{opacity:.88;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
-.ll-subtitle{font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:3px;margin-bottom:6px;position:relative;z-index:1;}
-.ll-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:38px;color:#fff;letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1;line-height:1;}
-.ll-sub{font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:2px;margin-top:8px;position:relative;z-index:1;}
+.ll-subtitle{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:6px;position:relative;z-index:1;}
+.ll-title{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:34px;color:#fff;position:relative;z-index:1;line-height:1;}
+.ll-sub{font-size:12px;color:rgba(255,255,255,.45);margin-top:8px;position:relative;z-index:1;}
 
 /* ── SCREENS ── */
 .screen{position:fixed;inset:0;display:flex;flex-direction:column;overflow:hidden;transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .3s;height:100%;}
@@ -55,14 +70,14 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 #sc-auth{background:var(--off);overflow-y:auto;}
 .auth-wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px 48px;}
 .auth-logo-area{text-align:center;margin-bottom:24px;}
-.auth-logo{width:72px;height:72px;object-fit:contain;border-radius:0;background:transparent;mix-blend-mode:multiply;}
-.auth-club{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--g4);margin-top:8px;letter-spacing:2px;text-transform:uppercase;}
+.auth-logo{width:66px;height:66px;object-fit:contain;border-radius:0;}
+.auth-club{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:14px;color:var(--g4);margin-top:8px;}
 .auth-sub{display:none;}
 .auth-box{background:var(--card);border-radius:24px;padding:30px 26px 26px;width:100%;max-width:420px;box-shadow:var(--shl);}
-.a-head{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;color:var(--navy);margin-bottom:2px;letter-spacing:.2px;line-height:1.1;}
+.a-head{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:32px;color:var(--navy);margin-bottom:2px;letter-spacing:.2px;line-height:1.1;}
 .a-sub2{font-size:13px;color:var(--g4);margin-bottom:22px;margin-top:3px;}
 .a-tabs{display:flex;gap:0;margin-bottom:26px;border-bottom:2px solid var(--g1);}
-.a-tab{flex:1;padding:10px 0;text-align:center;font-size:12px;font-weight:700;color:var(--g4);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:'Barlow',sans-serif;transition:all .18s;text-transform:uppercase;letter-spacing:.5px;}
+.a-tab{flex:1;padding:10px 0;text-align:center;font-size:12px;font-weight:700;color:var(--g4);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;transition:all .18s;}
 .a-tab.on{color:var(--navy);border-bottom-color:var(--gold);}
 .a-err{background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.15);border-radius:var(--rs);padding:9px 13px;font-size:13px;color:#B91C1C;margin-bottom:14px;display:none;}
 /* Shared field styles — used in auth AND modals AND forms throughout */
@@ -74,7 +89,7 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
   border:none;border-bottom:1.5px solid var(--g2);
   border-radius:0;padding:9px 0;
   font-size:15px;color:var(--navy);
-  font-family:'Barlow',sans-serif;outline:none;-webkit-appearance:none;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;outline:none;-webkit-appearance:none;
   transition:border-color .18s;
 }
 .li:focus,.fi:focus,.fs:focus,.fta:focus{border-bottom-color:var(--gold);}
@@ -82,7 +97,7 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 .fta{resize:vertical;min-height:80px;}
 /* Select needs a bit of padding since it has no border box */
 .fs{padding:9px 4px 9px 0;cursor:pointer;}
-.a-btn{width:100%;background:linear-gradient(135deg,var(--navy) 0%,var(--navyl) 100%);border:none;border-radius:30px;padding:15px;font-size:15px;font-weight:800;color:#fff;font-family:'Barlow Condensed',sans-serif;cursor:pointer;margin-top:12px;letter-spacing:.8px;text-transform:uppercase;box-shadow:0 6px 24px rgba(13,27,62,.22);transition:transform .15s,box-shadow .15s;}
+.a-btn{width:100%;background:linear-gradient(135deg,var(--navy) 0%,var(--navyl) 100%);border:none;border-radius:30px;padding:15px;font-size:15px;font-weight:800;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;cursor:pointer;margin-top:12px;box-shadow:0 6px 24px rgba(13,27,62,.22);transition:transform .15s,box-shadow .15s;}
 .a-btn:active{transform:scale(.98);box-shadow:0 2px 10px rgba(13,27,62,.15);}
 .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:5px;}
 .role-opt{padding:11px 8px;border-radius:var(--rs);border:1.5px solid var(--g2);cursor:pointer;text-align:center;background:var(--card);transition:all .18s;}
@@ -97,11 +112,11 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 #sc-invite{background:var(--off);overflow-y:auto;}
 .inv-hero{background:linear-gradient(145deg,var(--navy) 0%,var(--navyl) 60%,rgba(200,132,26,.6) 100%);padding:48px 22px 36px;text-align:center;}
 .inv-logo{width:64px;height:64px;object-fit:contain;background:transparent;filter:brightness(0) invert(1);margin-bottom:14px;}
-.inv-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:#fff;text-transform:uppercase;letter-spacing:.5px;}
+.inv-title{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:28px;color:#fff;}
 .inv-sub{font-size:13px;color:rgba(255,255,255,.55);margin-top:4px;}
-.inv-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:12px;font-weight:700;padding:4px 16px;border-radius:20px;margin-top:12px;text-transform:uppercase;letter-spacing:.3px;}
+.inv-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:12px;font-weight:700;padding:4px 16px;border-radius:20px;margin-top:12px;letter-spacing:.3px;}
 .inv-form{background:var(--off);flex:1;border-radius:24px 24px 0 0;padding:28px 22px 48px;margin-top:-16px;}
-.if-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;color:var(--navy);margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px;}
+.if-title{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:24px;color:var(--navy);margin-bottom:4px;letter-spacing:.3px;}
 .if-sub{font-size:13px;color:var(--g4);margin-bottom:22px;}
 .fg{margin-bottom:16px;}
 .fl{display:block;font-size:11px;font-weight:700;color:var(--navy);letter-spacing:.3px;margin-bottom:6px;}
@@ -109,16 +124,16 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 .wr-opt{padding:11px 8px;border-radius:var(--rs);border:1.5px solid var(--g2);cursor:pointer;text-align:center;background:var(--card);transition:all .18s;}
 .wr-opt.on{border-color:var(--navy);background:rgba(13,27,62,.04);}
 .wr-opt .wrn{font-size:12px;font-weight:700;color:var(--navy);}
-.inv-submit{width:100%;background:linear-gradient(135deg,var(--navy) 0%,var(--navyl) 100%);border:none;border-radius:30px;padding:15px;font-size:15px;font-weight:800;color:#fff;font-family:'Barlow Condensed',sans-serif;cursor:pointer;margin-top:12px;text-transform:uppercase;letter-spacing:.8px;box-shadow:0 6px 24px rgba(13,27,62,.22);}
+.inv-submit{width:100%;background:linear-gradient(135deg,var(--navy) 0%,var(--navyl) 100%);border:none;border-radius:30px;padding:15px;font-size:15px;font-weight:800;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;cursor:pointer;margin-top:12px;box-shadow:0 6px 24px rgba(13,27,62,.22);}
 
 /* ── APP SHELL ── */
 #sc-app{background:var(--off);display:flex;flex-direction:column;height:100%;overflow:hidden;}
 #app-top{height:var(--toph);background:var(--card);border-bottom:1px solid var(--g1);display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;}
-#app-top img{width:28px;height:28px;object-fit:contain;flex-shrink:0;mix-blend-mode:multiply;}
-#top-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--navy);flex:1;text-transform:uppercase;letter-spacing:.5px;}
+#app-top img{width:28px;height:28px;object-fit:contain;flex-shrink:0;}
+#top-title{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:20px;color:var(--navy);flex:1;}
 #top-right{display:flex;align-items:center;gap:9px;}
 .top-av{width:32px;height:32px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--gold);cursor:pointer;flex-shrink:0;}
-#top-add-btn{background:var(--navy);border:none;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;color:#fff;font-family:'Barlow',sans-serif;cursor:pointer;display:none;}
+#top-add-btn{background:var(--navy);border:none;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;cursor:pointer;display:none;}
 #pages{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--navh) + 8px);}
 
 /* ── BOTTOM NAV ── */
@@ -145,7 +160,7 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
   cursor:pointer;border:none;
   background:transparent;padding:0;
   position:relative;transition:opacity .15s;
-  font-family:'Barlow',sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;
 }
 .nb:active{opacity:.6;}
 /* Icon circle — inactive */
@@ -198,7 +213,7 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 #more-drawer{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-radius:24px 24px 0 0;box-shadow:0 -4px 32px rgba(13,27,62,.1);z-index:9000;transform:translateY(100%);transition:transform .26s cubic-bezier(.4,0,.2,1);}
 #more-drawer.open{transform:translateY(0);}
 .dh{width:36px;height:4px;background:var(--g2);border-radius:2px;margin:12px auto 6px;}
-.d-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;color:var(--g4);padding:2px 18px 10px;text-transform:uppercase;letter-spacing:1.5px;}
+.d-title{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:13px;color:var(--g4);padding:2px 18px 10px;}
 .more-grid{display:grid !important;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--g1);width:100%;}
 .mi{display:flex !important;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:22px 8px;cursor:pointer;border-right:1px solid var(--g1);border-bottom:1px solid var(--g1);transition:background .15s;}
 .mi:nth-child(3n){border-right:none;}
@@ -219,17 +234,17 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 /* ── CARDS — white, soft shadow, no hard border ── */
 .card{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--sh);}
 .card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.card-t{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--navy);text-transform:uppercase;letter-spacing:.3px;}
+.card-t{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:18px;color:var(--navy);letter-spacing:.3px;}
 
 /* ── STAT CARDS ── */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .sc{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--sh);}
-.sl{font-size:10px;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;}
-.sv{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:34px;color:var(--navy);line-height:1;}
+.sl{font-size:10px;font-weight:700;color:var(--g4);margin-bottom:6px;}
+.sv{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:34px;color:var(--navy);line-height:1;}
 .ss{font-size:11px;color:var(--g4);margin-top:3px;}
 
 /* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 18px;border-radius:20px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Barlow',sans-serif;transition:opacity .15s,transform .12s;}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 18px;border-radius:20px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;transition:opacity .15s,transform .12s;}
 .btn:active{opacity:.8;transform:scale(.97);}
 .btn-gold{background:var(--gold);color:var(--navy);}
 .btn-ghost{background:var(--off);color:var(--g6);border:1px solid var(--g2);}
@@ -239,12 +254,12 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 .btn-outline{background:transparent;color:var(--g6);border:1.5px solid var(--g2);}
 
 /* ── BADGES ── */
-.badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:3px 8px;border-radius:5px;}
+.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.3px;padding:3px 8px;border-radius:5px;}
 .b-game{background:rgba(245,166,35,.12);color:var(--goldd);}
 .b-training{background:rgba(37,99,235,.1);color:var(--info);}
 .b-meeting{background:rgba(22,163,74,.1);color:var(--ok);}
 .b-social{background:rgba(236,72,153,.1);color:#BE185D;}
-.live-badge{background:var(--no);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;padding:3px 10px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:4px;}
+.live-badge{background:var(--no);color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:11px;padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;}
 .live-badge::before{content:'';width:6px;height:6px;background:#fff;border-radius:50%;animation:pulse 1.2s ease infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .prog{height:5px;background:var(--g1);border-radius:3px;overflow:hidden;}
@@ -255,14 +270,14 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 .hero{background:linear-gradient(145deg,var(--navy) 0%,var(--navyl) 70%,rgba(200,132,26,.4) 100%);border-radius:0;padding:0;margin-bottom:0;position:relative;overflow:hidden;min-height:190px;display:flex;flex-direction:column;justify-content:flex-end;}
 .hero-inner{padding:22px 18px 24px;position:relative;z-index:2;width:100%;display:flex;align-items:flex-end;justify-content:space-between;}
 .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.08;z-index:1;}
-.hero-t{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:#fff;line-height:1.05;text-transform:uppercase;letter-spacing:.5px;}
+.hero-t{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:28px;color:#fff;line-height:1.05;}
 .hero-s{font-size:12px;color:rgba(255,255,255,.55);margin-top:3px;}
-.hero-b{background:var(--gold);color:var(--navy);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;display:inline-block;margin-top:10px;text-transform:uppercase;letter-spacing:.3px;cursor:pointer;}
+.hero-b{background:var(--gold);color:var(--navy);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;display:inline-block;margin-top:10px;letter-spacing:.3px;cursor:pointer;}
 
 /* ── SCHEDULE ── */
 .sf-bar{display:flex;gap:7px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px;scrollbar-width:none;}
 .sf-bar::-webkit-scrollbar{display:none;}
-.sf{padding:7px 16px;border-radius:20px;border:1.5px solid var(--g2);font-size:12px;font-weight:700;cursor:pointer;background:var(--card);color:var(--g6);white-space:nowrap;font-family:'Barlow',sans-serif;flex-shrink:0;transition:all .18s;}
+.sf{padding:7px 16px;border-radius:20px;border:1.5px solid var(--g2);font-size:12px;font-weight:700;cursor:pointer;background:var(--card);color:var(--g6);white-space:nowrap;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;flex-shrink:0;transition:all .18s;}
 .sf.on{background:var(--navy);color:#fff;border-color:var(--navy);}
 
 /* ── EVENT ITEMS — white card + left accent ── */
@@ -273,20 +288,20 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 .ev-item.social-item{border-left-color:#EC4899;}
 .ev-item.meeting-item{border-left-color:var(--ok);}
 .edb{width:42px;height:42px;background:var(--navy);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
-.edb .em{font-size:8px;font-weight:700;color:var(--gold);text-transform:uppercase;}
-.edb .ed{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:19px;color:#fff;line-height:1;}
+.edb .em{font-size:8px;font-weight:700;color:var(--gold);}
+.edb .ed{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:19px;color:#fff;line-height:1;}
 .ev-n{font-weight:700;font-size:14px;color:var(--navy);}
 .ev-m{font-size:11px;color:var(--g4);margin-top:2px;}
-.rp{padding:5px 13px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:'Barlow',sans-serif;flex-shrink:0;}
+.rp{padding:5px 13px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;flex-shrink:0;}
 .rp-g{background:rgba(22,163,74,.1);color:var(--ok);}
 .rp-n{background:rgba(220,38,38,.1);color:var(--no);}
 .rp-m{background:rgba(217,119,6,.1);color:var(--warn);}
 .rp-o{background:var(--g1);color:var(--g4);}
-.mhd{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:9px;margin-top:4px;}
+.mhd{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:13px;color:var(--navy);margin-bottom:9px;margin-top:4px;}
 .stat-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--g1);}
 .stat-row:last-child{border-bottom:none;}
 .stat-label{font-size:14px;color:var(--g6);font-weight:500;}
-.stat-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--navy);}
+.stat-value{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:22px;color:var(--navy);}
 
 /* ── MESSAGING ── */
 .thr-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--g1);cursor:pointer;}
@@ -303,7 +318,7 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 .bub.them{background:var(--card);border:1px solid var(--g1);color:var(--navy);border-radius:4px 18px 18px 18px;align-self:flex-start;box-shadow:var(--sh);}
 .bub.me{background:linear-gradient(135deg,var(--navy),var(--navyl));color:#fff;border-radius:18px 4px 18px 18px;align-self:flex-end;}
 .cin{display:flex;gap:9px;padding:10px 14px;border-top:1px solid var(--g1);background:var(--card);flex-shrink:0;align-items:center;}
-.cinput{flex:1;padding:9px 0;border:none;border-bottom:1.5px solid var(--g2);background:transparent;font-size:14px;font-family:'Barlow',sans-serif;outline:none;transition:border-color .18s;}
+.cinput{flex:1;padding:9px 0;border:none;border-bottom:1.5px solid var(--g2);background:transparent;font-size:14px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;outline:none;transition:border-color .18s;}
 .cinput:focus{border-bottom-color:var(--gold);}
 .csend{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navyl));border:none;color:#fff;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
 .csend svg{stroke:#fff;}
@@ -319,18 +334,28 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 .ann-by{font-size:11px;color:var(--g4);}
 .ann-body{font-size:14px;color:var(--g6);line-height:1.65;margin:10px 0;}
 .ann-ft{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--g1);}
-.r-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:20px;border:1.5px solid var(--g2);background:transparent;font-size:12px;cursor:pointer;font-family:'Barlow',sans-serif;color:var(--g6);transition:all .15s;}
+.ann-comments{margin-top:11px;padding-top:11px;border-top:1px solid var(--g1);}
+.ann-comment{display:flex;gap:8px;margin-bottom:9px;align-items:flex-start;}
+.ann-comment-av{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;}
+.ann-comment-body{flex:1;min-width:0;}
+.ann-comment-name{font-size:11px;font-weight:700;color:var(--navy);}
+.ann-comment-text{font-size:13px;color:var(--g6);margin-top:2px;line-height:1.5;}
+.ann-comment-img{max-width:100%;border-radius:8px;margin-top:5px;max-height:200px;object-fit:contain;}
+.ann-comment-input{display:flex;gap:7px;align-items:center;margin-top:9px;}
+.ann-comment-input input{flex:1;padding:7px 10px;border:none;border-bottom:1.5px solid var(--g2);background:transparent;font-size:13px;outline:none;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;}
+.ann-comment-input input:focus{border-bottom-color:var(--gold);}
+.r-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:20px;border:1.5px solid var(--g2);background:transparent;font-size:12px;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;color:var(--g6);transition:all .15s;}
 .r-btn.on{background:var(--goldp);border-color:var(--gold);color:var(--goldd);font-weight:700;}
 .post-box{background:var(--card);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--sh);}
 
 /* ── PROFILE ── */
 .prof-hero{background:linear-gradient(145deg,var(--navy) 0%,var(--navyl) 70%,rgba(200,132,26,.4) 100%);border-radius:0;padding:36px 16px 28px;margin-bottom:0;text-align:center;}
-.prof-av{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.1);border:3px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:28px;font-weight:900;color:#fff;font-family:'Barlow Condensed',sans-serif;}
-.prof-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;color:#fff;text-transform:uppercase;letter-spacing:.5px;}
-.prof-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;margin-top:8px;text-transform:uppercase;letter-spacing:.3px;}
+.prof-av{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.1);border:3px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:28px;font-weight:900;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;}
+.prof-name{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:26px;color:#fff;}
+.prof-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;margin-top:8px;letter-spacing:.3px;}
 .ir{display:flex;align-items:center;gap:9px;padding:13px 0;border-bottom:1px solid var(--g1);}
 .ir:last-child{border-bottom:none;}
-.il{font-size:11px;font-weight:700;color:var(--g4);width:90px;flex-shrink:0;text-transform:uppercase;letter-spacing:.3px;}
+.il{font-size:11px;font-weight:700;color:var(--g4);width:90px;flex-shrink:0;letter-spacing:.3px;}
 .iv{font-size:14px;color:var(--navy);font-weight:600;flex:1;}
 
 /* ── SPONSORS ── */
@@ -339,27 +364,27 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 .sp-card.silver-tier{border-left-color:#9CA3AF;}
 .sp-card.bronze-tier{border-left-color:#D97706;}
 .sp-card.community-tier{border-left-color:var(--info);}
-.sp-logo{width:100%;height:48px;border-radius:var(--rs);background:var(--off);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:17px;color:var(--g4);letter-spacing:2px;}
+.sp-logo{width:100%;height:48px;border-radius:var(--rs);background:var(--off);display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:17px;color:var(--g4);}
 .sp-name{font-weight:700;font-size:15px;color:var(--navy);}
 .sp-cat{font-size:12px;color:var(--g4);}
 .sp-deal{background:var(--off);border-radius:var(--rs);padding:9px 12px;font-size:13px;color:var(--g6);line-height:1.55;}
-.code-chip{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;padding:7px 14px;border-radius:var(--rs);letter-spacing:1px;cursor:pointer;}
-.code-cc{font-size:9px;color:rgba(255,255,255,.45);font-family:'Barlow',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
-.adm-edit{background:var(--off);border:none;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;color:var(--navy);font-family:'Barlow',sans-serif;}
+.code-chip{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:var(--gold);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:16px;padding:7px 14px;border-radius:var(--rs);cursor:pointer;}
+.code-cc{font-size:9px;color:rgba(255,255,255,.45);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:600;}
+.adm-edit{background:var(--off);border:none;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;color:var(--navy);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;}
 
 /* ── LEARNING HUB ── */
 .lh-hero{background:linear-gradient(145deg,var(--navy),var(--navyl));border-radius:var(--r);padding:22px 18px;margin-bottom:14px;}
-.lh-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;color:#fff;margin-bottom:4px;text-transform:uppercase;}
+.lh-title{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:24px;color:#fff;margin-bottom:4px;}
 .lh-sub{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:14px;}
 .lh-prog-wrap{background:rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;}
 .lh-pl{font-size:11px;color:rgba(255,255,255,.6);margin-bottom:6px;display:flex;justify-content:space-between;}
 .lh-bar{height:5px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden;}
 .lh-bf{height:100%;background:var(--gold);border-radius:3px;width:0%;transition:width .5s;}
-.lh-sh{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;color:var(--navy);margin:16px 0 10px;text-transform:uppercase;letter-spacing:.5px;padding-left:10px;border-left:3px solid var(--gold);}
+.lh-sh{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:15px;color:var(--navy);margin:16px 0 10px;padding-left:10px;border-left:3px solid var(--gold);}
 .lh-lesson{background:var(--card);border-radius:var(--r);padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none;box-shadow:var(--sh);transition:transform .12s;}
 .lh-lesson:active{transform:scale(.99);}
 .lh-lesson.done{background:rgba(22,163,74,.05);border-left:3px solid var(--ok);}
-.lh-num{width:32px;height:32px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:var(--gold);flex-shrink:0;}
+.lh-num{width:32px;height:32px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:14px;color:var(--gold);flex-shrink:0;}
 .lh-lesson.done .lh-num{background:var(--ok);color:#fff;}
 .lh-lt{font-weight:700;font-size:14px;color:var(--navy);}
 .lh-ls{font-size:12px;color:var(--g4);margin-top:2px;}
@@ -367,12 +392,12 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 
 /* ── RESOURCES ── */
 .res-hero{background:linear-gradient(145deg,var(--navy),var(--navyl));border-radius:var(--r);padding:22px 18px;margin-bottom:14px;}
-.res-ht{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:#fff;text-transform:uppercase;}
+.res-ht{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:22px;color:#fff;}
 .res-hs{font-size:12px;color:rgba(255,255,255,.6);}
-.res-sh{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;color:var(--navy);margin:16px 0 10px;text-transform:uppercase;letter-spacing:.5px;padding-left:10px;border-left:3px solid var(--info);}
+.res-sh{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:15px;color:var(--navy);margin:16px 0 10px;padding-left:10px;border-left:3px solid var(--info);}
 .res-l{background:var(--card);border-radius:var(--r);padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none;box-shadow:var(--sh);transition:transform .12s;}
 .res-l:active{transform:scale(.99);}
-.res-n{width:30px;height:30px;border-radius:50%;background:var(--info);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:#fff;flex-shrink:0;}
+.res-n{width:30px;height:30px;border-radius:50%;background:var(--info);display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:13px;color:#fff;flex-shrink:0;}
 
 /* ── ROSTER ── */
 .mem-card{background:var(--card);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:9px;cursor:pointer;box-shadow:var(--sh);transition:transform .12s;}
@@ -384,7 +409,7 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 /* ── ADMIN ── */
 .adm-tabs{display:flex;gap:0;border-bottom:2px solid var(--g1);margin-bottom:16px;overflow-x:auto;scrollbar-width:none;}
 .adm-tabs::-webkit-scrollbar{display:none;}
-.at{padding:10px 14px;font-size:11px;font-weight:700;color:var(--g4);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:'Barlow',sans-serif;white-space:nowrap;transition:color .18s;text-transform:uppercase;letter-spacing:.4px;}
+.at{padding:10px 14px;font-size:11px;font-weight:700;color:var(--g4);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;white-space:nowrap;transition:color .18s;letter-spacing:.4px;}
 .at.on{color:var(--navy);border-bottom-color:var(--gold);}
 
 /* ── MODAL ── */
@@ -394,7 +419,7 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 .mo.open .md{transform:translateY(0);}
 .mh{padding:14px 20px 12px;border-bottom:1px solid var(--g1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--card);z-index:1;border-radius:24px 24px 0 0;}
 .mh::before{content:'';display:block;width:36px;height:4px;background:var(--g2);border-radius:2px;position:absolute;top:8px;left:50%;transform:translateX(-50%);}
-.mt{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--navy);padding-top:6px;text-transform:uppercase;letter-spacing:.3px;}
+.mt{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:20px;color:var(--navy);padding-top:6px;letter-spacing:.3px;}
 .mc{width:28px;height:28px;border-radius:50%;border:none;background:var(--g1);font-size:14px;cursor:pointer;margin-top:6px;flex-shrink:0;color:var(--g6);}
 .mb{padding:20px;}
 .mf{padding:14px 20px;border-top:1px solid var(--g1);display:flex;gap:9px;justify-content:flex-end;background:var(--card);}
@@ -411,7 +436,7 @@ html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background
 
 /* ── TABLE ── */
 table{width:100%;border-collapse:collapse;font-size:13px;}
-th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g4);padding:8px 12px;border-bottom:2px solid var(--g1);}
+th{text-align:left;font-size:10px;font-weight:700;color:var(--g4);padding:8px 12px;border-bottom:2px solid var(--g1);}
 td{padding:11px 12px;border-bottom:1px solid var(--g1);color:var(--navy);vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 
@@ -488,7 +513,7 @@ tr:last-child td{border-bottom:none;}
 <div class="screen" id="sc-auth">
   <div class="auth-wrap">
     <div class="auth-logo-area">
-      <img class="auth-logo" id="auth-logo" src="" alt="" style="mix-blend-mode:multiply;">
+      <div style="width:88px;height:88px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0 auto;"><img class="auth-logo" id="auth-logo" src="" alt="" style="width:84px;height:84px;object-fit:cover;mix-blend-mode:screen;"></div>
       <div class="auth-club">Syndal Storm</div>
     </div>
     <div class="auth-box">
@@ -534,7 +559,7 @@ tr:last-child td{border-bottom:none;}
 </div>
 
 <!-- FIREBASE SETUP SCREEN (config hardcoded, shown only via admin settings) -->
-<div class="screen hidden" id="sc-firebase" style="background:linear-gradient(145deg,#0A1628,#1E3060);overflow-y:auto;"><div style="min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;"><div style="text-align:center;margin-bottom:24px;"><div style="width:64px;height:64px;border-radius:50%;border:2px solid rgba(245,166,35,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 6 6 10 8 14c1 2 3 3 4 3s3-1 4-3c2-4 0-8-4-12z"/><path d="M9 17c0 2 1.5 3 3 3s3-1 3-3"/></svg></div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:#fff;">Firebase Config</div><div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:4px;">Admin only — update database connection</div></div><div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:24px;width:100%;max-width:440px;"><div class="lf"><label class="ll2">Firebase Config (JSON)</label><textarea id="fb-config-input" style="width:100%;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.14);border-radius:12px;padding:11px 13px;font-size:11px;color:#fff;font-family:monospace;outline:none;min-height:120px;resize:vertical;"></textarea></div><div id="fb-err" style="background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);border-radius:12px;padding:9px 13px;font-size:13px;color:#FCA5A5;text-align:center;margin-bottom:12px;display:none;"></div><button style="width:100%;background:linear-gradient(135deg,#F5A623,#FFBE4D);border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:800;color:#0A1628;font-family:'Barlow Condensed',sans-serif;cursor:pointer;margin-top:8px;" onclick="connectFirebase()">Reconnect →</button><div style="text-align:center;margin-top:12px;"><button onclick="useLocalOnly()" style="background:none;border:none;color:rgba(255,255,255,.3);font-size:12px;cursor:pointer;font-family:'Barlow',sans-serif;text-decoration:underline;">Use offline mode</button></div></div></div></div>
+<div class="screen hidden" id="sc-firebase" style="background:linear-gradient(145deg,#0A1628,#1E3060);overflow-y:auto;"><div style="min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;"><div style="text-align:center;margin-bottom:24px;"><div style="width:64px;height:64px;border-radius:50%;border:2px solid rgba(245,166,35,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 6 6 10 8 14c1 2 3 3 4 3s3-1 4-3c2-4 0-8-4-12z"/><path d="M9 17c0 2 1.5 3 3 3s3-1 3-3"/></svg></div><div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:22px;color:#fff;">Firebase Config</div><div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:4px;">Admin only — update database connection</div></div><div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:24px;width:100%;max-width:440px;"><div class="lf"><label class="ll2">Firebase Config (JSON)</label><textarea id="fb-config-input" style="width:100%;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.14);border-radius:12px;padding:11px 13px;font-size:11px;color:#fff;font-family:monospace;outline:none;min-height:120px;resize:vertical;"></textarea></div><div id="fb-err" style="background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);border-radius:12px;padding:9px 13px;font-size:13px;color:#FCA5A5;text-align:center;margin-bottom:12px;display:none;"></div><button style="width:100%;background:linear-gradient(135deg,#F5A623,#FFBE4D);border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:800;color:#0A1628;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;cursor:pointer;margin-top:8px;" onclick="connectFirebase()">Reconnect →</button><div style="text-align:center;margin-top:12px;"><button onclick="useLocalOnly()" style="background:none;border:none;color:rgba(255,255,255,.3);font-size:12px;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;text-decoration:underline;">Use offline mode</button></div></div></div></div>
 
 <!-- INVITE SCREEN -->
 <div class="screen hidden" id="sc-invite">
@@ -571,7 +596,7 @@ tr:last-child td{border-bottom:none;}
 <!-- MAIN APP -->
 <div class="screen hidden" id="sc-app">
   <div id="app-top">
-    <img id="top-logo" src="" alt="SS" style="mix-blend-mode:multiply;">
+    <div style="width:34px;height:34px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;"><img id="top-logo" src="" alt="SS" style="width:34px;height:34px;object-fit:cover;mix-blend-mode:screen;"></div>
     <div id="top-title">Home</div>
     <div id="top-right">
       <button id="top-add-btn" onclick="topAdd()">+ Add</button>
@@ -591,8 +616,8 @@ tr:last-child td{border-bottom:none;}
             <div class="hero-b" id="hero-next">Loading…</div>
           </div>
           <div style="text-align:right;">
-            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:38px;color:var(--gold);line-height:1;" id="hero-rec">0-0</div>
-            <div style="font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;">Season Record</div>
+            <div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:38px;color:var(--gold);line-height:1;" id="hero-rec">0-0</div>
+            <div style="font-size:10px;color:rgba(255,255,255,.5);">Season Record</div>
           </div>
         </div>
       </div>
@@ -602,7 +627,7 @@ tr:last-child td{border-bottom:none;}
         <div class="sc"><div class="sl">Unread</div><div class="sv" style="color:var(--gold);" id="dash-unread">0</div><div class="ss">New messages</div></div>
       </div>
       <div class="card" style="margin-bottom:13px;">
-        <div class="card-hd"><div class="card-t">Upcoming Events</div><button class="btn btn-ghost" style="font-size:11px;padding:4px 9px;background:none;border:none;color:var(--gold);font-weight:700;font-family:'Barlow',sans-serif;cursor:pointer;" onclick="navTo('schedule')">See All →</button></div>
+        <div class="card-hd"><div class="card-t">Upcoming Events</div><button class="btn btn-ghost" style="font-size:11px;padding:4px 9px;background:none;border:none;color:var(--gold);font-weight:700;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;cursor:pointer;" onclick="navTo('schedule')">See All →</button></div>
         <div id="dash-evs"></div>
       </div>
       <div class="card" style="margin-bottom:13px;">
@@ -622,7 +647,7 @@ tr:last-child td{border-bottom:none;}
     <!-- SCHEDULE -->
     <div class="page" id="pg-schedule"><div class="page-pad">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;flex-wrap:wrap;gap:8px;">
-        <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:21px;" id="sched-title">Schedule</div><div style="font-size:12px;color:var(--g4);" id="sched-season">Season Schedule</div></div>
+        <div><div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:21px;" id="sched-title">Schedule</div><div style="font-size:12px;color:var(--g4);" id="sched-season">Season Schedule</div></div>
         <button class="btn btn-gold" id="sched-add-btn" style="display:none;font-size:12px;padding:6px 11px;" onclick="openModal('add-event')">+ Add Event</button>
       </div>
       <div class="sf-bar">
@@ -640,8 +665,11 @@ tr:last-child td{border-bottom:none;}
     <div class="page" id="pg-messaging" style="padding:0;">
       <div id="msg-list-view" style="padding:16px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:21px;">Messages</div>
-          <button class="btn btn-gold" style="font-size:12px;padding:5px 10px;" onclick="openModal('new-msg')">+ New</button>
+          <div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:21px;">Messages</div>
+          <div style="display:flex;gap:7px;">
+            <button class="btn btn-ghost" style="font-size:12px;padding:5px 10px;" onclick="openModal('new-dm')">DM</button>
+            <button class="btn btn-gold" style="font-size:12px;padding:5px 10px;" onclick="openModal('new-msg')">+ Group</button>
+          </div>
         </div>
         <div class="card"><div id="thr-list"></div></div>
       </div>
@@ -664,7 +692,7 @@ tr:last-child td{border-bottom:none;}
       <div class="ann-banner">
         <img id="ann-logo" src="" style="width:36px;height:36px;object-fit:contain;opacity:.85;flex-shrink:0;" alt="">
         <div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;color:#fff;">Club Announcements</div>
+          <div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:17px;color:#fff;">Club Announcements</div>
           <div style="font-size:11px;color:rgba(255,255,255,.55);">Syndal Storm HQ — visible to all teams</div>
         </div>
       </div>
@@ -693,7 +721,13 @@ tr:last-child td{border-bottom:none;}
     <!-- PROFILE -->
     <div class="page" id="pg-profile">
       <div class="prof-hero">
+        <div style="position:relative;display:inline-block;margin:0 auto 12px;">
         <div class="prof-av" id="prof-av">?</div>
+        <label id="prof-photo-btn" style="position:absolute;bottom:0;right:0;width:26px;height:26px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);" title="Change photo">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <input type="file" accept="image/*" style="display:none;" onchange="uploadProfilePhoto(this)">
+        </label>
+      </div>
         <div class="prof-name" id="prof-name">Your Name</div>
         <div class="prof-badge" id="prof-badge">Player</div>
         <div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:4px;" id="prof-team-lbl">U18 Men — Storm</div>
@@ -711,6 +745,7 @@ tr:last-child td{border-bottom:none;}
         <div class="ir"><div class="il">Role</div><div class="iv" id="prof-role">—</div></div>
         <div style="margin-top:13px;padding-top:13px;border-top:1px solid var(--g1);display:flex;flex-direction:column;gap:8px;">
           <button id="install-btn" class="btn btn-navy" style="width:100%;justify-content:center;display:none;" onclick="promptInstall()">Add to Home Screen</button>
+          <button class="btn btn-navy" style="width:100%;justify-content:center;margin-bottom:8px;" onclick="openModal('send-invite')">Share Team Invite</button>
           <button class="btn btn-ghost" style="width:100%;justify-content:center;color:var(--no);border-color:var(--no);" onclick="doLogout()">Sign Out</button>
         </div>
       </div>
@@ -721,7 +756,7 @@ tr:last-child td{border-bottom:none;}
     <div class="page" id="pg-store" style="padding:0;">
       <div class="page-pad" style="padding-bottom:8px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;flex-wrap:wrap;gap:8px;">
-          <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:21px;">Storm Store</div><div style="font-size:12px;color:var(--g4);">Official Syndal Storm Merchandise</div></div>
+          <div><div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:21px;">Storm Store</div><div style="font-size:12px;color:var(--g4);">Official Syndal Storm Merchandise</div></div>
           <a href="https://www.syndalstorm.com/merch" target="_blank" class="btn btn-gold" style="font-size:12px;padding:5px 11px;text-decoration:none;">Open in Browser</a>
         </div>
       </div>
@@ -733,7 +768,7 @@ tr:last-child td{border-bottom:none;}
     <!-- SPONSORS -->
     <div class="page" id="pg-sponsors"><div class="page-pad">
       <div style="margin-bottom:13px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:21px;">Sponsors &amp; Deals</div>
+        <div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:21px;">Sponsors &amp; Deals</div>
         <div style="font-size:12px;color:var(--g4);">Show your Storm membership to claim discounts</div>
       </div>
       <div id="spons-adm-bar" style="display:none;margin-bottom:11px;"><button class="btn btn-gold" style="font-size:12px;" onclick="openModal('add-sponsor')">+ Add Sponsor</button></div>
@@ -745,7 +780,7 @@ tr:last-child td{border-bottom:none;}
     <!-- ROSTER -->
     <div class="page" id="pg-roster"><div class="page-pad">
       <div style="margin-bottom:13px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:21px;" id="roster-title">Team Roster</div>
+        <div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:21px;" id="roster-title">Team Roster</div>
         <div style="font-size:12px;color:var(--g4);">Members who have joined the app</div>
       </div>
       <div id="roster-list"></div>
@@ -811,7 +846,7 @@ tr:last-child td{border-bottom:none;}
 
     <!-- ADMIN -->
     <div class="page" id="pg-admin"><div class="page-pad">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:21px;margin-bottom:3px;">Admin Panel</div>
+      <div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:21px;margin-bottom:3px;">Admin Panel</div>
       <div style="font-size:12px;color:var(--g4);margin-bottom:14px;">Club management — all teams</div>
       <div class="adm-tabs" id="adm-tabs">
         <div class="at on" onclick="admTab('teams',this)">Teams</div>
@@ -872,6 +907,12 @@ function lsSet(key, val) {
   try { localStorage.setItem('ss_' + key, JSON.stringify(val)); } catch(e) {}
 }
 
+// Set loader logo immediately (before any async)
+(function() {
+  var el = document.getElementById('ll-logo');
+  if (el) el.src = LOGO;
+})();
+
 // ===== FIREBASE =====
 var DB = null;         // Firebase database reference
 var USE_FB = false;    // true when Firebase connected
@@ -931,6 +972,13 @@ function useLocalOnly() {
 }
 
 function initFirebase(cfg) {
+  // Guard: check Firebase SDK actually loaded from CDN
+  if (typeof firebase === 'undefined' || window._fbLoadFailed) {
+    USE_FB = false;
+    DB = null;
+    showAuthScreen();
+    return;
+  }
   try {
     if (!firebase.apps.length) {
       firebase.initializeApp(cfg);
@@ -938,22 +986,31 @@ function initFirebase(cfg) {
     DB = firebase.database();
     USE_FB = true;
     lsSet('fb_config', cfg);
-    // Test connection then load data
     document.getElementById('sc-firebase').classList.add('hidden');
-    showLoading('Syncing data…');
-    loadAllFromFirebase(function() {
-      hideLoading();
-      showAuthScreen();
-    });
+    // Show auth immediately — Firebase syncs in background
+    showAuthScreen();
+    // Background sync: teams + accounts (needed for login/signup)
+    DB.ref('teams').once('value', function(snap) {
+      var val = snap.val();
+      if (val) { TEAMS = val; lsSet('teams', TEAMS); populateTeamSelects(); }
+    }).catch(function(){});
+    DB.ref('accounts').once('value', function(snap) {
+      var val = snap.val();
+      if (val) { ACCOUNTS = val; lsSet('accounts', ACCOUNTS); }
+      else {
+        ACCOUNTS = lsGet('accounts', {admin:{pass:'storm2026',team:'club',role:'Club Admin',name:'Club Admin',isAdmin:true,isCoach:false,isMgr:false}});
+        fbSet('accounts', ACCOUNTS);
+      }
+    }).catch(function(){});
   } catch(e) {
-    var errEl = document.getElementById('fb-err');
-    errEl.style.display = 'block';
-    errEl.textContent = 'Firebase error: ' + e.message;
+    USE_FB = false;
+    DB = null;
+    showAuthScreen();
   }
 }
 
 function showAuthScreen() {
-  if (typeof _fbTimeout !== 'undefined') clearTimeout(_fbTimeout);
+  if (window._fbSafetyTimer) { clearTimeout(window._fbSafetyTimer); window._fbSafetyTimer = null; }
   document.getElementById('sc-firebase').classList.add('hidden');
   document.getElementById('sc-auth').classList.remove('hidden');
   populateTeamSelects();
@@ -1012,8 +1069,26 @@ function teamPath(subpath) {
 function loadAllFromFirebase(done) {
   var team = CU ? CU.team : 'club';
   var remaining = 0;
+  var finished = false;
+  // Count all expected calls FIRST, then start them
   function count() { remaining++; }
-  function finish() { remaining--; if (remaining <= 0 && done) done(); }
+  function finish() {
+    remaining--;
+    if (remaining <= 0 && !finished && done) {
+      finished = true;
+      done();
+    }
+  }
+  // Safety: call done after 12s regardless
+  var loadTimer = setTimeout(function() {
+    if (!finished && done) { finished = true; done(); }
+  }, 12000);
+  // Wrap finish to also clear timer
+  var _origFinish = finish;
+  finish = function() {
+    _origFinish();
+    if (finished) clearTimeout(loadTimer);
+  };
 
   // ── Shared / club-wide data ──
   count();
@@ -1317,39 +1392,46 @@ function populateTeamSelects() {
 }
 
 window.addEventListener('load', function() {
+  // Set logo on all img elements
   var imgs = document.querySelectorAll('img[id]');
   for (var i = 0; i < imgs.length; i++) {
-    if (imgs[i].src === '' || imgs[i].src === window.location.href) {
+    var rawSrc = imgs[i].getAttribute('src');
+    if (!rawSrc || rawSrc === '' || imgs[i].src === window.location.href) {
       imgs[i].src = LOGO;
     }
   }
-  setTimeout(function() {
-    document.getElementById('loader').classList.add('out');
-    // Hardcoded Firebase config — no setup screen needed
-    // Firebase config — key split to avoid GitHub secret scanning false-positives
-    // Firebase web API keys are public by design; security is via database rules
-    var _a = ["AIzaSyBn6gVOf24", "ozvsP2P3LJ67KF9Y9wLzDsR4"].join("");
-    var HARDCODED_CONFIG = {
-      apiKey: _a,
-      authDomain: "syndal-storm-app-jhfrjl.firebaseapp.com",
-      databaseURL: "https://syndal-storm-app-jhfrjl-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "syndal-storm-app-jhfrjl",
-      storageBucket: "syndal-storm-app-jhfrjl.firebasestorage.app",
-      messagingSenderId: "603244361689",
-      appId: "1:603244361689:web:d70a9e67ad464c3c488bc8"
-    };
-    lsSet('fb_config', HARDCODED_CONFIG);
-    // Safety net: if Firebase hangs for 8s, show login anyway
-    window._fbSafetyTimer = setTimeout(function() {
-      var auth = document.getElementById('sc-auth');
-      if (auth && auth.classList.contains('hidden')) {
-        console.warn('Firebase timeout — showing auth screen anyway');
-        auth.classList.remove('hidden');
-        populateTeamSelects();
-      }
-    }, 8000);
-    initFirebase(HARDCODED_CONFIG);
-  }, 900);
+
+  var _a = ["AIzaSyBn6gVOf24", "ozvsP2P3LJ67KF9Y9wLzDsR4"].join("");
+  var HARDCODED_CONFIG = {
+    apiKey: _a,
+    authDomain: "syndal-storm-app-jhfrjl.firebaseapp.com",
+    databaseURL: "https://syndal-storm-app-jhfrjl-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "syndal-storm-app-jhfrjl",
+    storageBucket: "syndal-storm-app-jhfrjl.firebasestorage.app",
+    messagingSenderId: "603244361689",
+    appId: "1:603244361689:web:d70a9e67ad464c3c488bc8"
+  };
+
+  // Poll until Firebase SDK is ready (loaded dynamically), max 6s
+  var _waited = 0;
+  function tryInit() {
+    if (typeof firebase !== 'undefined' && firebase.app) {
+      // SDK loaded — init
+      document.getElementById('loader').classList.add('out');
+      initFirebase(HARDCODED_CONFIG);
+    } else if (_waited < 6000) {
+      _waited += 150;
+      setTimeout(tryInit, 150);
+    } else {
+      // SDK never loaded — show login with cached data
+      document.getElementById('loader').classList.add('out');
+      USE_FB = false;
+      DB = null;
+      showAuthScreen();
+    }
+  }
+  // Give splash screen at least 800ms to show
+  setTimeout(tryInit, 800);
 });
 
 // ===== AUTH =====
@@ -1524,7 +1606,7 @@ function launchApp() {
   var imgs = document.querySelectorAll('img');
   for (var i = 0; i < imgs.length; i++) {
     var src = imgs[i].getAttribute('src');
-    if (src === '' || src === null) imgs[i].src = LOGO;
+    if (!src || src === '' || src === null) imgs[i].src = LOGO;
   }
 
   var td = TEAMS[CU.team] || '';
@@ -1568,6 +1650,15 @@ function launchApp() {
     });
   }
   updateProfile();
+  // Load profile photo if saved
+  var selfMem = null;
+  for (var i = 0; i < ROSTER.length; i++) { if (ROSTER[i].username === CU.username) { selfMem = ROSTER[i]; break; } }
+  if (selfMem && selfMem.photo) {
+    CU.photo = selfMem.photo;
+    var av2 = document.getElementById('prof-av');
+    if (av2) { av2.innerHTML = '<img src="' + selfMem.photo + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">'; av2.style.padding='0'; }
+    updateTopAvatar();
+  }
   renderDash();
   renderSched('all');
   renderThrList();
@@ -1719,7 +1810,7 @@ function renderDash() {
   var de = document.getElementById('dash-evs');
   if (de) {
     if (!EVENTS.length) {
-      de.innerHTML = '<div style="text-align:center;padding:32px 16px;"><div style="width:56px;height:56px;border-radius:50%;border:1.5px solid var(--g2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"var(--g4)\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M16 2v4M8 2v4M3 10h18\"/></svg></div><div style=\"font-weight:900;font-size:16px;color:var(--navy);text-transform:uppercase;\">No Events Yet</div><div style=\"font-size:12px;color:var(--g4);margin-top:4px;\">Add one from the Schedule page</div></div>';
+      de.innerHTML = '<div style="text-align:center;padding:32px 16px;"><div style="width:56px;height:56px;border-radius:50%;border:1.5px solid var(--g2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"var(--g4)\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M16 2v4M8 2v4M3 10h18\"/></svg></div><div style=\"font-weight:900;font-size:16px;color:var(--navy);\">No Events Yet</div><div style=\"font-size:12px;color:var(--g4);margin-top:4px;\">Add one from the Schedule page</div></div>';
     } else {
       var html = '';
       var evs = EVENTS.slice(0, 3);
@@ -1754,7 +1845,7 @@ function renderDash() {
       var a = ANNOUNCEMENTS[0];
       da.innerHTML = '<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;">'
         + '<div style="width:6px;height:6px;border-radius:50%;background:var(--gold);"></div>'
-        + '<div style="font-size:10px;font-weight:700;color:var(--goldd);text-transform:uppercase;letter-spacing:.4px;">Syndal Storm HQ · ' + a.time + '</div>'
+        + '<div style="font-size:10px;font-weight:700;color:var(--goldd);letter-spacing:.4px;">Syndal Storm HQ · ' + a.time + '</div>'
         + '</div>'
         + '<div style="font-weight:700;font-size:13.5px;color:var(--navy);margin-bottom:4px;">' + a.title + '</div>'
         + '<div style="font-size:12.5px;color:var(--g6);line-height:1.55;">' + a.body.slice(0, 110) + (a.body.length > 110 ? '...' : '') + '</div>';
@@ -1882,12 +1973,17 @@ function rsvpClick(btn, id) {
 function renderThrList() {
   var el = document.getElementById('thr-list');
   if (!el) return;
-  if (!THREADS.length) { el.innerHTML = '<div style="text-align:center;padding:36px 16px;"><div style="width:56px;height:56px;border-radius:50%;border:1.5px solid var(--g2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"var(--g4)\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z\"/></svg></div><div style=\"font-weight:900;font-size:15px;color:var(--navy);text-transform:uppercase;margin-bottom:4px;\">No Messages Yet</div><div style=\"font-size:13px;color:var(--g4);\">Tap + New to start a conversation</div></div>'; return; }
+  if (!THREADS.length) { el.innerHTML = '<div style="text-align:center;padding:36px 16px;"><div style="width:56px;height:56px;border-radius:50%;border:1.5px solid var(--g2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"var(--g4)\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z\"/></svg></div><div style=\"font-weight:900;font-size:15px;color:var(--navy);margin-bottom:4px;\">No Messages Yet</div><div style=\"font-size:13px;color:var(--g4);\">Tap + New to start a conversation</div></div>'; return; }
   var html = '';
   for (var i = 0; i < THREADS.length; i++) {
     var t = THREADS[i];
     var dot = t.unread ? '<div class="udot"></div>' : '';
-    var thrTeamBadge = (CU && CU.isAdmin && t._team && TEAMS[t._team]) ? '<span style="font-size:9px;font-weight:600;color:#1E40AF;">' + TEAMS[t._team].split(' — ')[0] + '</span>' : '';
+    var thrTeamBadge = '';
+    if (t.isDM) {
+      thrTeamBadge = '<span style="font-size:9px;font-weight:700;background:rgba(37,99,235,.1);color:var(--info);padding:1px 6px;border-radius:4px;">DM</span>';
+    } else if (CU && CU.isAdmin && t._team && TEAMS[t._team]) {
+      thrTeamBadge = '<span style="font-size:9px;font-weight:600;color:#1E40AF;">' + TEAMS[t._team].split(' — ')[0] + '</span>';
+    }
     html += '<div class="thr-item" onclick="openChat(' + t.id + ')">'
           + '<div class="t-av" style="background:' + t.bg + ';color:' + t.fg + ';">' + t.sh + '</div>'
           + '<div style="flex:1;min-width:0;">'
@@ -2041,7 +2137,7 @@ function renderAnn(filter) {
     var pinnedBadge = a.pinned ? '<span style="font-size:9px;font-weight:800;background:#FDF2F8;color:#9D174D;padding:2px 6px;border-radius:3px;">PINNED</span>' : '';
     var newBadge = a.unread ? '<span style="font-size:9px;font-weight:800;background:var(--gold);color:var(--navy);padding:2px 6px;border-radius:3px;">NEW</span>' : '';
     var teamLabel = a.teams || (TEAMS[a._team] ? TEAMS[a._team].split(' — ')[0] : (a._team || 'All'));
-    var teamsBadge = '<span style="font-size:9px;font-weight:700;background:#EFF6FF;color:#1E40AF;padding:2px 6px;border-radius:3px;text-transform:uppercase;">' + teamLabel + '</span>';
+    var teamsBadge = '<span style="font-size:9px;font-weight:700;background:#EFF6FF;color:#1E40AF;padding:2px 6px;border-radius:3px;">' + teamLabel + '</span>';
     var editBtn = (CU && CU.isAdmin) ? '<button class="adm-edit" onclick="editAnn(' + a.id + ')">Edit</button>' : '';
     html += '<div class="ann-card' + (a.pinned ? ' pinned' : '') + '">'
           + '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;">'
@@ -2057,7 +2153,28 @@ function renderAnn(filter) {
           + '<button class="r-btn' + (a.myFire  ? ' on' : '') + '" data-id="' + a.id + '" data-t="fire"  onclick="reactAnn(this)" style="display:inline-flex;align-items:center;gap:4px;"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2C8 6 6 10 8 14c1 2 3 3 4 3s3-1 4-3c2-4 0-8-4-12z\"/></svg> <span id=\"afc-' + a.id + '\">' + a.fire + '</span></button>'
           + '<button class="r-btn' + (a.myHeart ? ' on' : '') + '" data-id="' + a.id + '" data-t="heart" onclick="reactAnn(this)">❤️</button>'
           + '<div style="margin-left:auto;font-size:11px;color:var(--g4);display:flex;align-items:center;gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> ' + a.views + '</div>'
-          + '</div></div>';
+          + '<div class="ann-comments" id="ann-cmts-' + a.id + '">';
+    var comments = a.comments || [];
+    for (var ci = 0; ci < comments.length; ci++) {
+      var cm = comments[ci];
+      var cmColor = AVCOLS[Math.abs((cm.by||'a').charCodeAt(0)) % AVCOLS.length];
+      html += '<div class="ann-comment">'
+        + '<div class="ann-comment-av" style="background:' + cmColor + ';">' + escHtml(ini(cm.name||cm.by||'?')) + '</div>'
+        + '<div class="ann-comment-body">'
+        + '<div class="ann-comment-name">' + escHtml(cm.name||cm.by||'') + '</div>'
+        + (cm.text ? '<div class="ann-comment-text">' + escHtml(cm.text) + '</div>' : '')
+        + (cm.photo ? '<img class="ann-comment-img" src="' + cm.photo + '">' : '')
+        + '</div></div>';
+    }
+    html += '<div class="ann-comment-input">'
+      + '<input id="cmt-in-' + a.id + '" placeholder="Add a comment…" onkeydown="if(event.key===\'Enter\')postComment(' + a.id + ')" style="flex:1;padding:7px 0;border:none;border-bottom:1.5px solid var(--g2);background:transparent;font-size:13px;outline:none;">'
+      + '<label style="cursor:pointer;padding:5px;color:var(--g4);display:flex;align-items:center;" title="Photo">'
+      + '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>'
+      + '<input type="file" accept="image/*" style="display:none;" onchange="previewCommentPhoto(this,' + a.id + ')">'
+      + '</label>'
+      + '<button onclick="postComment(' + a.id + ')" style="background:var(--navy);border:none;border-radius:20px;padding:5px 13px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;white-space:nowrap;">Post</button>'
+      + '</div></div>';
+    html += '</div>';
   }
   el.innerHTML = html;
   // Persist view counts if any changed
@@ -2071,6 +2188,53 @@ function filterAnn(f, btn) {
   document.querySelectorAll('#ann-filters .sf').forEach(function(b) { b.classList.remove('on'); });
   btn.classList.add('on');
   renderAnn(f);
+}
+
+function previewCommentPhoto(input, annId) {
+  if (!input.files || !input.files[0]) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    // Store on input element for pickup when posting
+    input._photoData = e.target.result;
+    // Show a small preview indicator
+    var inEl = document.getElementById('cmt-in-' + annId);
+    if (inEl) inEl.placeholder = 'Photo ready — add a caption or just post';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function postComment(annId) {
+  if (!CU) return;
+  var inEl = document.getElementById('cmt-in-' + annId);
+  var text = inEl ? inEl.value.trim() : '';
+  // Find attached photo if any
+  var photoInput = null;
+  var cmtSection = document.getElementById('ann-cmts-' + annId);
+  if (cmtSection) {
+    var fileInputs = cmtSection.querySelectorAll('input[type=file]');
+    if (fileInputs.length) photoInput = fileInputs[0];
+  }
+  var photoData = (photoInput && photoInput._photoData) ? photoInput._photoData : null;
+  if (!text && !photoData) { toast('Write a comment or attach a photo'); return; }
+  // Add to announcement
+  for (var i = 0; i < ANNOUNCEMENTS.length; i++) {
+    if (ANNOUNCEMENTS[i].id === annId) {
+      if (!ANNOUNCEMENTS[i].comments) ANNOUNCEMENTS[i].comments = [];
+      ANNOUNCEMENTS[i].comments.push({
+        by: CU.username, name: CU.name,
+        text: text, photo: photoData,
+        ts: Date.now()
+      });
+      saveAnnouncements();
+      break;
+    }
+  }
+  renderAnn(annFilter);
+  // Re-open the ann that was being commented on
+  setTimeout(function() {
+    var el = document.getElementById('cmt-in-' + annId);
+    if (el) el.focus();
+  }, 60);
 }
 
 function reactAnn(btn) {
@@ -2149,7 +2313,7 @@ function renderSponsors() {
       if (SPONSORS[i].tier === tier) list.push({sp:SPONSORS[i], idx:i});
     }
     if (!list.length) continue;
-    html += '<div style="font-family:\'Barlow Condensed\',sans-serif;font-weight:800;font-size:14px;color:var(--g4);text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px;">'
+    html += '<div style="font-family:\'Helvetica Neue\',sans-serif;font-weight:800;font-size:14px;color:var(--g4);margin:14px 0 8px;">'
           + tierIcons[tier] + ' ' + tierLabels[tier] + '</div>';
     for (var j = 0; j < list.length; j++) {
       var s = list[j].sp;
@@ -2164,7 +2328,7 @@ function renderSponsors() {
         + '</div>') : '';
       html += '<div class="sp-card ' + tier + '-tier">'
             + '<div style="display:flex;align-items:flex-start;gap:10px;">'
-            + '<div class="sp-logo" style="width:54px;height:54px;min-width:54px;border-radius:9px;font-size:14px;">' + logoLetters + '</div>'
+            + (s.logo ? '<div style="width:54px;height:54px;min-width:54px;border-radius:9px;overflow:hidden;background:var(--off);"><img src="' + s.logo + '" style="width:100%;height:100%;object-fit:contain;"></div>' : '<div class="sp-logo" style="width:54px;height:54px;min-width:54px;border-radius:9px;font-size:14px;">' + logoLetters + '</div>')
             + '<div style="flex:1;"><div class="sp-name">' + s.name + '</div><div class="sp-cat">' + s.cat + '</div></div>'
             + '</div>'
             + '<div class="sp-deal"><strong>Member Deal:</strong> ' + s.deal + '</div>'
@@ -2176,7 +2340,7 @@ function renderSponsors() {
   if (!SPONSORS.length && !isAdm) {
     html += '<div style="text-align:center;padding:36px 16px;">'
           + '<div style="width:56px;height:56px;border-radius:50%;border:1.5px solid var(--g2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--g4)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 00-7.65 0l-.77.78-.77-.78a5.4 5.4 0 00-7.65 7.65l8.42 8.42 8.42-8.42a5.4 5.4 0 000-7.65z"/></svg></div>'
-          + '<div style="font-weight:900;font-size:15px;color:var(--navy);text-transform:uppercase;margin-bottom:4px;">No Sponsors Yet</div>'
+          + '<div style="font-weight:900;font-size:15px;color:var(--navy);margin-bottom:4px;">No Sponsors Yet</div>'
           + '<div style="font-size:13px;">Sponsor deals will appear here once added by the club admin.</div>'
           + '</div>';
   }
@@ -2209,7 +2373,7 @@ function renderRoster() {
   if (!el) return;
   var members = CU && CU.isAdmin ? ROSTER : ROSTER.filter(function(m) { return m.team === (CU ? CU.team : 'club'); });
   if (!members.length) {
-    el.innerHTML = '<div style="text-align:center;padding:36px 16px;"><div style="width:56px;height:56px;border-radius:50%;border:1.5px solid var(--g2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"var(--g4)\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2\"/><circle cx=\"9\" cy=\"7\" r=\"4\"/><path d=\"M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75\"/></svg></div><div style=\"font-weight:900;font-size:15px;color:var(--navy);text-transform:uppercase;margin-bottom:4px;\">No Members Yet</div><div style=\"font-size:13px;color:var(--g4);\">Members will appear here after signing up.</div></div>';
+    el.innerHTML = '<div style="text-align:center;padding:36px 16px;"><div style="width:56px;height:56px;border-radius:50%;border:1.5px solid var(--g2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"var(--g4)\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2\"/><circle cx=\"9\" cy=\"7\" r=\"4\"/><path d=\"M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75\"/></svg></div><div style=\"font-weight:900;font-size:15px;color:var(--navy);margin-bottom:4px;\">No Members Yet</div><div style=\"font-size:13px;color:var(--g4);\">Members will appear here after signing up.</div></div>';
     return;
   }
   var html = '';
@@ -2336,7 +2500,7 @@ function admTab(tab, btn) {
       ahtml += '<td style="font-weight:600;font-size:13px;">' + ac.name + '</td>';
       ahtml += '<td style="font-size:12px;font-family:monospace;background:#f8f9fa;padding:2px 6px;border-radius:4px;">' + ak + '</td>';
       ahtml += '<td><div style="display:flex;align-items:center;gap:6px;">';
-      ahtml += '<span id="pw-' + ai + '" data-pw="' + safePw + '" style="font-family:monospace;font-size:12px;letter-spacing:2px;">\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022</span>';
+      ahtml += '<span id="pw-' + ai + '" data-pw="' + safePw + '" style="font-family:monospace;font-size:12px;">\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022</span>';
       ahtml += '<button class="adm-edit" onclick="togglePw(' + ai + ')">Show</button>';
       ahtml += '</div></td>';
       ahtml += '<td style="font-size:12px;">' + tl + '</td>';
@@ -2378,7 +2542,7 @@ function admTab(tab, btn) {
       var tcol = s.tier === 'gold' ? '#C8841A' : s.tier === 'silver' ? '#6B7280' : s.tier === 'bronze' ? '#92400E' : '#1E40AF';
       shtml += '<tr>'
              + '<td style="font-weight:600;font-size:13px;">' + s.name + '</td>'
-             + '<td><span style="font-size:10px;font-weight:700;text-transform:uppercase;padding:2px 6px;border-radius:4px;background:' + tbg + ';color:' + tcol + ';">' + s.tier + '</span></td>'
+             + '<td><span style="font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:' + tbg + ';color:' + tcol + ';">' + s.tier + '</span></td>'
              + '<td style="font-size:12px;color:var(--g4);">' + s.cat + '</td>'
              + '<td style="font-size:12px;">' + (s.code || '—') + '</td>'
              + '<td><div style="display:flex;gap:5px;">'
@@ -2398,9 +2562,9 @@ function admTab(tab, btn) {
       var rw = parts[0] || '0'; var rl = parts[1] || '0';
       recHtml += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">'
                + '<div style="font-size:13px;flex:1;font-weight:600;">' + (TEAMS[rk] || rk) + '</div>'
-               + '<input id="tr-w-' + rk + '" type="number" min="0" value="' + rw + '" style="width:46px;padding:5px 7px;border:1px solid var(--g2);border-radius:var(--rs);font-size:14px;font-family:\'Barlow\',sans-serif;text-align:center;">'
+               + '<input id="tr-w-' + rk + '" type="number" min="0" value="' + rw + '" style="width:46px;padding:5px 7px;border:1px solid var(--g2);border-radius:var(--rs);font-size:14px;font-family:\'Helvetica Neue\',sans-serif;text-align:center;">'
                + '<span style="color:var(--g4);font-weight:700;">—</span>'
-               + '<input id="tr-l-' + rk + '" type="number" min="0" value="' + rl + '" style="width:46px;padding:5px 7px;border:1px solid var(--g2);border-radius:var(--rs);font-size:14px;font-family:\'Barlow\',sans-serif;text-align:center;">'
+               + '<input id="tr-l-' + rk + '" type="number" min="0" value="' + rl + '" style="width:46px;padding:5px 7px;border:1px solid var(--g2);border-radius:var(--rs);font-size:14px;font-family:\'Helvetica Neue\',sans-serif;text-align:center;">'
                + '<button class="btn btn-gold" style="font-size:11px;padding:4px 9px;" onclick="saveTeamRecord(\'' + rk + '\')">Save</button>'
                + '</div>';
     }
@@ -2483,6 +2647,22 @@ var MODAL_BODIES = {
     action: 'saveNewEvent()',
     actionLabel: 'Add Event'
   },
+  'new-dm': {
+    title: 'New Direct Message',
+    get body() {
+      var members = ROSTER.filter(function(m) {
+        return m.username !== (CU ? CU.username : '') && 
+               (CU && CU.isAdmin ? true : m.team === CU.team);
+      });
+      var opts = members.map(function(m) {
+        return '<option value="' + m.username + '">' + m.name + (CU && CU.isAdmin ? ' (' + (TEAMS[m.team]||m.team||'').split(' — ')[0] + ')' : '') + '</option>';
+      }).join('');
+      return '<div class="fg"><div class="fl">Send to</div><select class="fs" id="dm-to">' + (opts || '<option value="">No teammates yet</option>') + '</select></div>'
+        + '<div class="fg"><div class="fl">Message</div><textarea class="fta" id="dm-msg" style="min-height:75px;" placeholder="Write your first message…"></textarea></div>';
+    },
+    action: 'saveNewDM()',
+    actionLabel: 'Start Chat'
+  },
   'new-msg': {
     title: 'New Chat Thread',
     get body() {
@@ -2513,6 +2693,13 @@ var MODAL_BODIES = {
   'add-sponsor': {
     title: 'Add Sponsor',
     body: '<div class="fg"><div class="fl">Sponsor Name</div><input class="fi" id="as-name" placeholder="Business name"></div>'
+        + '<div class="fg"><div class="fl">Logo (optional)</div>'
+        + '<div style="display:flex;align-items:center;gap:10px;">'
+        + '<div id="as-logo-prev" style="width:54px;height:54px;border-radius:9px;background:var(--off);border:1.5px solid var(--g2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--g4);flex-shrink:0;">No logo</div>'
+        + '<label style="flex:1;cursor:pointer;">'
+        + '<div class="btn btn-ghost" style="width:100%;justify-content:center;">Upload Logo</div>'
+        + '<input type="file" accept="image/*" id="as-logo-file" style="display:none;" onchange="previewSponsorLogo(this)">'
+        + '</label></div></div>'
         + '<div class="fg"><div class="fl">Category</div><input class="fi" id="as-cat" placeholder="e.g. Health, Food"></div>'
         + '<div class="fg"><div class="fl">Tier</div><select class="fs" id="as-tier"><option>gold</option><option>silver</option><option>bronze</option><option>community</option></select></div>'
         + '<div class="fg"><div class="fl">Member Deal</div><textarea class="fta" id="as-deal" placeholder="e.g. 15% off all treatments" style="min-height:65px;"></textarea></div>'
@@ -2534,12 +2721,7 @@ var MODAL_BODIES = {
     title: 'Add New Team',
     get body() {
       return '<div class="fg"><div class="fl">Team Name</div><input class="fi" id="at-label" placeholder="e.g. U18 Men — Storm" oninput="var k=this.value.toLowerCase().replace(/[^a-z0-9]/g,\'\').slice(0,8);var el=document.getElementById(\'at-key\');if(el&&!el._manual)el.value=k;"></div>'
-        + '<div class="fg"><div class="fl">Team Key (auto-filled, editable)</div><input class="fi" id="at-key" placeholder="e.g. u18m" oninput="this._manual=true;"></div>'
-        + '<div class="fg" style="background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.15);border-radius:12px;padding:12px;"><div style="font-size:11px;color:var(--goldd);font-weight:700;margin-bottom:10px;">Optional: Create a Coach Account</div>'
-        + '<div class="fg"><div class="fl">Coach Username</div><input class="fi" id="at-cu" placeholder="coach.jane"></div>'
-        + '<div class="fg"><div class="fl">Coach Full Name</div><input class="fi" id="at-cn" placeholder="Coach Jane Smith"></div>'
-        + '<div class="fg" style="margin-bottom:0"><div class="fl">Coach Password</div><input class="fi" id="at-cp" type="password" placeholder="••••••••"></div>'
-        + '</div>';
+        + '<div class="fg"><div class="fl">Team Key (auto-filled, editable)</div><input class="fi" id="at-key" placeholder="e.g. u18m" oninput="this._manual=true;"></div>';
     },
     action: 'saveNewTeam()',
     actionLabel: 'Create Team'
@@ -2664,9 +2846,9 @@ function openModal(type, idx) {
       + '<div class="mb">'
       + '<div style="text-align:center;padding:6px 0 16px;">'
       + '<div style="width:60px;height:60px;border-radius:50%;background:' + AVCOLS[idx % AVCOLS.length] + ';display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;margin:0 auto 9px;">' + ini(m.name) + '</div>'
-      + '<div style="font-family:\'Barlow Condensed\',sans-serif;font-weight:800;font-size:19px;">' + m.name + '</div>'
+      + '<div style="font-family:\'Helvetica Neue\',sans-serif;font-weight:800;font-size:19px;">' + m.name + '</div>'
       + '<div style="font-size:12px;color:var(--g4);margin-top:2px;">' + m.role + ' · ' + (TEAMS[m.team] || m.team) + '</div>'
-      + (m.num ? '<div style="font-family:\'Barlow Condensed\',sans-serif;font-weight:900;font-size:32px;color:var(--gold);margin-top:5px;">#' + m.num + '</div>' : '')
+      + (m.num ? '<div style="font-family:\'Helvetica Neue\',sans-serif;font-weight:900;font-size:32px;color:var(--gold);margin-top:5px;">#' + m.num + '</div>' : '')
       + '</div>'
       + (CU && (CU.isAdmin || m.username === CU.username) ? '<div class="ir"><div class="il">Email</div><div class="iv">' + (m.email || '—') + '</div></div>' : '')
       + (CU && (CU.isAdmin || m.username === CU.username) ? '<div class="ir"><div class="il">Phone</div><div class="iv">' + (m.phone || '—') + '</div></div>' : '')
@@ -2746,20 +2928,72 @@ function saveSponsor(idx) {
   toast('Sponsor updated!');
 }
 
+function previewSponsorLogo(input) {
+  if (!input.files || !input.files[0]) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var prev = document.getElementById('as-logo-prev');
+    if (prev) {
+      prev.innerHTML = '<img src="' + e.target.result + '" style="width:100%;height:100%;object-fit:contain;border-radius:7px;">';
+      prev._logoData = e.target.result;
+    }
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
 function saveNewSponsor() {
   var n = document.getElementById('as-name'); var c = document.getElementById('as-cat');
   var t = document.getElementById('as-tier'); var d = document.getElementById('as-deal');
   var co = document.getElementById('as-code');
+  var logoPrev = document.getElementById('as-logo-prev');
   if (!n || !n.value || !d || !d.value) { toast('Please fill in name and deal'); return; }
   SPONSORS.push({
     name: n.value, cat: c ? c.value : 'Other',
     tier: t ? t.value : 'community',
-    deal: d.value, code: (co && co.value) ? co.value : null
+    deal: d.value, code: (co && co.value) ? co.value : null,
+    logo: (logoPrev && logoPrev._logoData) ? logoPrev._logoData : null
   });
   saveSponsors();
   renderSponsors();
   closeModal();
   toast('Sponsor added!');
+}
+
+function uploadProfilePhoto(input) {
+  if (!input.files || !input.files[0]) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var data = e.target.result;
+    // Save to CU and localStorage
+    if (CU) CU.photo = data;
+    // Save to roster
+    for (var i = 0; i < ROSTER.length; i++) {
+      if (ROSTER[i].username === CU.username) { ROSTER[i].photo = data; break; }
+    }
+    saveRoster();
+    // Update avatar display
+    var av = document.getElementById('prof-av');
+    if (av) {
+      av.innerHTML = '<img src="' + data + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+      av.style.padding = '0';
+    }
+    // Update top-right avatar
+    updateTopAvatar();
+    toast('Photo updated!');
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function updateTopAvatar() {
+  var topAv = document.getElementById('top-av');
+  if (!topAv || !CU) return;
+  if (CU.photo) {
+    topAv.innerHTML = '<img src="' + CU.photo + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    topAv.style.padding = '0';
+  } else {
+    topAv.textContent = ini(CU.name);
+    topAv.style.padding = '';
+  }
 }
 
 function saveProfile() {
@@ -2997,6 +3231,57 @@ function saveNewEvent() {
   toast('Event added!');
 }
 
+function saveNewDM() {
+  var toSel = document.getElementById('dm-to');
+  var msgEl = document.getElementById('dm-msg');
+  if (!toSel || !toSel.value) { toast('Please select a recipient'); return; }
+  var toUsername = toSel.value;
+  var toMember = null;
+  for (var i = 0; i < ROSTER.length; i++) { if (ROSTER[i].username === toUsername) { toMember = ROSTER[i]; break; } }
+  if (!toMember) { toast('Member not found'); return; }
+  var msg = msgEl ? msgEl.value.trim() : '';
+  // Create thread named after recipient, tagged as DM
+  var myName = CU ? CU.name.split(' ')[0] : 'Me';
+  var theirName = toMember.name.split(' ')[0];
+  var threadName = theirName + ' & ' + myName;
+  var sh = (theirName[0] + myName[0]).toUpperCase();
+  var bgCols = ['#0D1B3E','#1C2E5A','#C8841A','#166534','#9D174D','#1E40AF'];
+  var bg = bgCols[THREADS.length % bgCols.length];
+  var threadId = USE_FB && DB ? DB.ref('threads').push().key : String(Date.now());
+  var thread = {
+    id: threadId, name: threadName, sh: sh, bg: bg, fg: '#fff',
+    prev: msg ? (myName + ': ' + msg.slice(0, 35)) : 'New conversation',
+    time: 'Just now', unread: false, sub: 'Direct Message',
+    ts: Date.now(), _team: CU ? CU.team : 'club',
+    isDM: true, dmUsers: [CU ? CU.username : '', toUsername]
+  };
+  THREADS.unshift(thread);
+  CHATS[threadId] = [];
+  lsSet('threads', THREADS);
+  if (USE_FB && DB) {
+    var tteam = CU ? CU.team : 'club';
+    thread._team = tteam;
+    fbSet('teamdata/' + tteam + '/threads/' + threadId, thread);
+    if (msg && CU) {
+      var now = new Date();
+      var ts = now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+      fbPush('teamdata/' + tteam + '/chats/' + threadId, {from:CU.name, me:true, text:msg, time:ts, sender:CU.username, ts:Date.now()});
+    }
+    subscribeChat(threadId);
+  } else if (msg && CU) {
+    var now2 = new Date();
+    var ts2 = now2.getHours() + ':' + (now2.getMinutes() < 10 ? '0' : '') + now2.getMinutes();
+    CHATS[threadId].push({from:CU.name, me:true, text:msg, time:ts2, sender:CU.username});
+    lsSet('chats', CHATS);
+  }
+  renderThrList();
+  renderDash();
+  updateNavDots();
+  closeModal();
+  setTimeout(function() { openChat(threadId); }, 60);
+  toast('Chat started with ' + toMember.name + '!');
+}
+
 function saveNewThread() {
   var nm = document.getElementById('nm-name');
   var mg = document.getElementById('nm-msg');
@@ -3076,11 +3361,8 @@ function saveNewTeam() {
   if (!CU || !CU.isAdmin) { toast('Admin access required'); return; }
   var label = document.getElementById('at-label');
   var key   = document.getElementById('at-key');
-  var cu    = document.getElementById('at-cu');
-  var cn    = document.getElementById('at-cn');
-  var cp    = document.getElementById('at-cp');
-  if (!label || !label.value || !key || !key.value || !cu || !cu.value || !cp || !cp.value) {
-    toast('Please fill in all fields'); return;
+  if (!label || !label.value.trim() || !key || !key.value.trim()) {
+    toast('Please fill in team name and key'); return;
   }
   var k = key.value.trim().toLowerCase().replace(/\s+/g,'');
   if (TEAMS[k]) { toast('Team key already exists'); return; }
@@ -3088,21 +3370,14 @@ function saveNewTeam() {
   TEAM_REC[k] = '0-0';
   saveTeams();
   saveTeamRec();
-  if (cu.value && cp.value) {
-    var coachName = cn ? cn.value.trim() : cu.value;
-    ACCOUNTS[cu.value.trim().toLowerCase()] = {pass: cp.value, team: k, role:'Head Coach', name: coachName, isAdmin:false, isCoach:true, isMgr:false};
-    saveAccounts();
-    ROSTER.push({name: coachName, username: cu.value.trim().toLowerCase(), role:'Coach', team:k, num:'', pos:'', email:'', phone:''});
-    saveRoster();
-  }
   // Refresh ann-to select with the new team
   var annTo = document.getElementById('ann-to');
   if (annTo) {
     annTo.innerHTML = '';
-    Object.keys(TEAMS).forEach(function(k) {
+    Object.keys(TEAMS).forEach(function(tk) {
       var opt = document.createElement('option');
-      opt.value = k;
-      opt.textContent = TEAMS[k];
+      opt.value = tk;
+      opt.textContent = TEAMS[tk];
       annTo.appendChild(opt);
     });
   }
@@ -3110,7 +3385,7 @@ function saveNewTeam() {
   populateTeamSelects();
   admTab('teams', document.querySelector('#adm-tabs .at.on'));
   closeModal();
-  toast('Team created!');
+  toast('Team \u201c' + TEAMS[k] + '\u201d created!');
 }
 
 function showFirebaseSetup() {
