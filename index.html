@@ -2450,7 +2450,12 @@ function admTab(tab, btn) {
       var mCount = 0; for (var ri2 = 0; ri2 < ROSTER.length; ri2++) { if (ROSTER[ri2].team === k) mCount++; }
       var eCount = 0; for (var ei2 = 0; ei2 < EVENTS.length; ei2++) { if ((EVENTS[ei2]._team||'') === k) eCount++; }
       thtml += '<div class="card" style="border-left:4px solid var(--gold);margin-bottom:9px;">'
-             + '<div style="font-weight:700;font-size:14px;margin-bottom:3px;">' + label + '</div>'
+             + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:3px;">'
+             + '<div style="font-weight:700;font-size:14px;">' + label + '</div>'
+             + '<button onclick="deleteTeam(\'' + k + '\')" style="background:none;border:none;cursor:pointer;padding:2px;flex-shrink:0;" title="Delete team">'
+             + '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--no)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>'
+             + '</button>'
+             + '</div>'
              + '<div style="font-size:12px;color:var(--g4);margin-bottom:9px;">Record: ' + rec + ' · ' + mCount + ' members · ' + eCount + ' events</div>'
              + '<div style="display:flex;gap:6px;flex-wrap:wrap;">'
              + '<button class="btn btn-gold" style="font-size:12px;padding:4px 9px;" onclick="openModal(\'add-player\')">+ Member</button>'
@@ -3355,6 +3360,64 @@ function saveNewMember() {
   admTab('members', document.querySelector('#adm-tabs .at.on'));
   closeModal();
   toast('Member added! They can now log in as "' + username + '"');
+}
+
+function deleteTeam(teamKey) {
+  if (!CU || !CU.isAdmin) return;
+  var teamName = TEAMS[teamKey] || teamKey;
+  var mCount = ROSTER.filter(function(m) { return m.team === teamKey; }).length;
+  var warning = mCount > 0
+    ? 'Delete "' + teamName + '"?\n\nThis will remove the team and all its data. ' + mCount + ' member(s) will be unassigned.'
+    : 'Delete "' + teamName + '"?\n\nThis will remove the team and all its data.';
+  if (!confirm(warning)) return;
+
+  // Remove team from TEAMS and TEAM_REC
+  delete TEAMS[teamKey];
+  delete TEAM_REC[teamKey];
+  saveTeams();
+  saveTeamRec();
+
+  // Remove all events for this team
+  EVENTS = EVENTS.filter(function(e) { return (e._team || '') !== teamKey; });
+  saveEvents();
+
+  // Remove all announcements for this team
+  ANNOUNCEMENTS = ANNOUNCEMENTS.filter(function(a) { return (a._team || '') !== teamKey; });
+  saveAnnouncements();
+
+  // Unassign roster members (move them to 'club' so they're not lost)
+  for (var i = 0; i < ROSTER.length; i++) {
+    if (ROSTER[i].team === teamKey) ROSTER[i].team = 'club';
+  }
+  saveRoster();
+  for (var u in ACCOUNTS) {
+    if (ACCOUNTS[u].team === teamKey) ACCOUNTS[u].team = 'club';
+  }
+  saveAccounts();
+
+  // Remove Firebase teamdata for this team
+  if (USE_FB && DB) {
+    fbRemove('teamdata/' + teamKey);
+  }
+
+  // Refresh all selectors
+  var annTo = document.getElementById('ann-to');
+  if (annTo) {
+    annTo.innerHTML = '';
+    Object.keys(TEAMS).forEach(function(tk) {
+      var opt = document.createElement('option');
+      opt.value = tk; opt.textContent = TEAMS[tk];
+      annTo.appendChild(opt);
+    });
+  }
+  populateTeamSelects();
+
+  // Re-render
+  renderDash();
+  renderSched(schedFilter);
+  renderAnn(annFilter);
+  admTab('teams', document.querySelector('#adm-tabs .at.on'));
+  toast('"' + teamName + '" deleted');
 }
 
 function saveNewTeam() {
